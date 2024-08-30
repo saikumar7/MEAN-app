@@ -1,0 +1,34 @@
+<mat-toolbar color="primary">
+  <span>
+    <a routerLink="/">
+      MyMessages
+     </a>
+  </span>
+
+  <span style="justify-self: flex-end;">
+    @if (isUserAuthenticated) {
+      <span>
+        <a mat-button routerLink="/create" routerLinkActive="mat-accent">
+          New Post
+         </a>
+      </span>
+      <span>
+        <button mat-button (click)="onLogout()">
+          Logout
+        </button>
+      </span>
+    } @else {
+      <span>
+        <a mat-button routerLink="/auth/login" routerLinkActive="mat-accent">
+          Login
+         </a>
+      </span>
+      <span>
+        <a mat-button routerLink="/auth/signup" routerLinkActive="mat-accent">
+          Signup
+         </a>
+      </span>
+    }
+   
+  </span>
+</mat-toolbar>

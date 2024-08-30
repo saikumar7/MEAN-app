@@ -1,0 +1,39 @@
+@if(isLoading) {
+  <mat-spinner></mat-spinner>
+} 
+@if (posts.length > 0 && !isLoading) {
+<mat-accordion multi="true">
+  @for (post of posts; track $index) {
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ post.title }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <p>{{ post.content }}</p>
+    <div class="post-image">
+      <img [src]="post.imagePath" [alt]="post.title">
+    </div>
+    @if (isUserAuthenticated && userId === post.creator) {
+      <mat-action-row>
+        <button mat-button color="primary" [routerLink]="['/edit', post.id]">EDIT</button>
+        <button mat-button color="warn" (click)="onDeletePost(post.id)">DELETE</button>
+      </mat-action-row>
+    }
+  </mat-expansion-panel>
+  }
+</mat-accordion>
+<mat-paginator 
+  [length]="totalPosts" 
+  [pageSize]="postsPerPage" 
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onPageChanged($event)">
+</mat-paginator>
+} @else {
+<ng-container *ngTemplateOutlet="noPosts"></ng-container>
+}
+
+<ng-template #noPosts>
+  <p class="info-text mat-body-1">No posts added yet!</p>
+</ng-template>
+
